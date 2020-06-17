@@ -46,8 +46,7 @@ class HubSpotForm extends HTMLElement {
   }
   _renderForm() {
     if (!this._formid) return;
-    console.log(window.hbspt);
-
+    if(!window.hbspt) return;
     window.hbspt.forms.create({
       portalId: "6341951",
       formId: this._formid
@@ -65,6 +64,20 @@ class HubSpotForm extends HTMLElement {
 
   get formid() {
     return this._formid;
+  }
+
+   // Attribute observe and call back
+   static get observedAttributes() {
+    return [
+      "formid"
+    ];
+  }
+
+  
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if(attr === "formid") {
+      this.formid = newValue;
+    }
   }
 }
 
